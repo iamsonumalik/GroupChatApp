@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "95333833845",
+    "firebase_url": "https://groupchatapp-403a3.firebaseio.com",
+    "project_id": "groupchatapp-403a3",
+    "storage_bucket": "groupchatapp-403a3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95333833845:android:605ce03f24eb065c",
+        "android_client_info": {
+          "package_name": "ahuja.shivam.groupchatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "95333833845-vu8jpupqtcpovsi5mauka8t8rffe86ad.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ahuja.shivam.groupchatapp",
+            "certificate_hash": "a6a75c24f2b2a7ccf11a12344d3a5bb67cc34c7a"
+          }
+        },
+        {
+          "client_id": "95333833845-an7fo97kfupdd87rskj01f15peh2to6b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ahuja.shivam.groupchatapp",
+            "certificate_hash": "1b5902b3080cba0e49d38594ae9ed93cee897baa"
+          }
+        },
+        {
+          "client_id": "95333833845-3ucihkg69upko6erl90vdi719v7k4pdp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3LvKG4_DvEkTRpY6qCgS8jWOPAXoo3zE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "95333833845-3ucihkg69upko6erl90vdi719v7k4pdp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

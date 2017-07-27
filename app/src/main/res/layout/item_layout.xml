@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/myrelativelayout">
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="wrap_content"
+        android:textColor="@color/authui_colorAccent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        tools:text="Name" />
+    <ImageView
+        android:id="@+id/photoImageView"
+        android:layout_width="200dp"
+        android:layout_below="@id/nameTextView"
+        android:src="@mipmap/ic_launcher"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true" />
+
+    <TextView
+        android:id="@+id/messageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/photoImageView"
+        android:layout_alignParentLeft="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        tools:text="Message" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/username"
+        android:textColor="@color/authui_colorAccent"
+        android:visibility="gone"
+        android:layout_alignBaseline="@id/nameTextView"
+        android:layout_alignParentRight="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="name"/>
+    <ImageView
+        android:id="@+id/userphotoImageView"
+        android:layout_width="200dp"
+        android:layout_alignBaseline="@id/photoImageView"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:layout_below="@id/username"
+        android:src="@mipmap/ic_launcher"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userphotoImageView"
+        android:layout_alignBaseline="@id/messageTextView"
+        android:layout_alignParentRight="true"
+        android:text="message"
+        android:visibility="gone"
+        android:id="@+id/usersMsg"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
+
+    </RelativeLayout>
+    <View
+        android:layout_width="50dp"
+        android:layout_height="2dp"
+        android:id="@+id/line"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/myrelativelayout"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/gradientbackground2"
+        />
+</RelativeLayout>
