@@ -1,10 +1,12 @@
 package ahuja.shivam.groupchatapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuWrapperFactory;
 import android.text.Editable;
@@ -15,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,7 +26,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -91,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth= FirebaseAuth.getInstance();
 
         mFirebaseDatabaseReference=mFirebaseDatabase.getReference().child("message");
-
         mAuthStateListener= new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -174,11 +178,59 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // TODO: Send messages on click
                 MessagePOJOClass messagePOJOClass =new MessagePOJOClass(mMessageEditText.getText().toString(),mUsername,null);
-                mFirebaseDatabaseReference.push().setValue(messagePOJOClass);
+               // mFirebaseDatabaseReference.push().setValue(messagePOJOClass);
+                String key = mFirebaseDatabaseReference.push().getKey();
+                messagePOJOClass.setKey(key);
+                mFirebaseDatabaseReference.child(key).setValue(messagePOJOClass);
                 // Clear input box
                 mMessageEditText.setText("");
             }
         });
+
+
+        // delete an item
+        mMessageListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long l) {
+                AlertDialog.Builder alerdialog=new AlertDialog.Builder(MainActivity.this);
+                alerdialog.setMessage("the message will be deleted permanently from server");
+                alerdialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                alerdialog.setPositiveButton("delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        final MessagePOJOClass messagePOJOClass=mMessageAdapter.getItem(position);
+                        String key=messagePOJOClass.getKey();
+
+                        mFirebaseDatabaseReference.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                String photourl = messagePOJOClass.getPhotoUrl();
+                                if(photourl!=null) {
+                                    FirebaseStorage.getInstance().getReferenceFromUrl(photourl).delete();
+                                }
+                                Toast.makeText(MainActivity.this,"deleted successfully",Toast.LENGTH_LONG).show();
+                                mMessageAdapter.remove(messagePOJOClass);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(MainActivity.this,"deleted successfully",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                });
+                alerdialog.setTitle("DELETE");
+                alerdialog.create().show();
+
+                return true;
+            }
+        });
+
     }
 
     private void logedoutRemove() {
@@ -244,7 +296,9 @@ public class MainActivity extends AppCompatActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     @SuppressWarnings("VisibleForTests") Uri downloadurl= taskSnapshot.getDownloadUrl();
                     MessagePOJOClass message=new MessagePOJOClass(null,mUsername,downloadurl.toString());
-                    mFirebaseDatabaseReference.push().setValue(message);
+                    String key = mFirebaseDatabaseReference.push().getKey();
+                    message.setKey(key);
+                    mFirebaseDatabaseReference.child(key).setValue(message);
                     Toast.makeText(MainActivity.this,"image sent successfully",Toast.LENGTH_SHORT).show();
 
                 }

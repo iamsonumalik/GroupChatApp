@@ -9,6 +9,10 @@ public class MessagePOJOClass {
     private String name;
     private String photoUrl;
 
+
+
+    private String key;
+
     public MessagePOJOClass() {
     }
 
@@ -41,4 +45,12 @@ public class MessagePOJOClass {
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
 }
